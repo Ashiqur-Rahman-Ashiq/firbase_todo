@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_todo/pages/homepage.dart';
 Future <void> main() async {
-  await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final Future <FirebaseApp> _fbApp =Firebase.initializeApp();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -26,11 +28,24 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage()
+      /*FutureBuilder(
+        future: _fbApp,
+        builder: (context,snapshoot) {
+          if(snapshoot.hasError){
+             print('your error is ${snapshoot.error.toString()}');
+          }else if(snapshoot.hasData){
+            MyHomePage(title: 'My amasing counter app');
+          }else{
+             Center(child: CircularProgressIndicator());
+          }
+        },
+    ),*/
     );
   }
 }
 
+/*
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -115,3 +130,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
